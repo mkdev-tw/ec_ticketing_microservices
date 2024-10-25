@@ -4,12 +4,13 @@ import mongoose from "mongoose";
 import { Order } from "../../models/order";
 import { Payment } from "../../models/payment";
 import { OrderStatus } from "@mkvalidate/common";
-import Stripe from 'stripe';
+import { stripe } from "../../stripe";
+// import Stripe from 'stripe';
 
 
-const stripe = new Stripe(process.env.STRIPE_KEY!, {
-  apiVersion: '2024-06-20'
-});
+// const stripe = new Stripe(process.env.STRIPE_KEY!, {
+//   apiVersion: '2024-06-20'
+// });
 
 it('returns a 404 when purchasing an order that does not exist', async () => {
   await request(app)
