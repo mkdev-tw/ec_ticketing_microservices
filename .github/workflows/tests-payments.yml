@@ -6,12 +6,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env: 
+      STRIPE_KEY: ${{ secrets.STRIPE_KEY }}
     steps:
       - uses: actions/checkout@v2
-      - name: Set up environment variables
-        env: 
-          STRIPE_KEY: ${{ secrets.STRIPE_KEY }}
-        run: echo "Environment variable STRIPE_KEY set"
       - run: cd payments && npm install && npm run test:ci
 
       
