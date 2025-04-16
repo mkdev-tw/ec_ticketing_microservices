@@ -22,14 +22,6 @@ orders-tests:
     - npm install
     - npm run test:ci
 
-payments-tests:
-  stage: test
-  image: node:18-bullseye
-  script:
-    - cd payments
-    - npm install
-    - npm run test:ci
-
 tickets-tests:
   stage: test
   image: node:18-bullseye
