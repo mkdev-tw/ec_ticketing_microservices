@@ -13,3 +13,27 @@ auth-tests:
     - cd auth
     - npm install
     - npm run test:ci
+
+orders-tests:
+  stage: test
+  image: node:18-bullseye
+  script:
+    - cd orders
+    - npm install
+    - npm run test:ci
+
+payments-tests:
+  stage: payments
+  image: node:18-bullseye
+  script:
+    - cd auth
+    - npm install
+    - npm run test:ci
+
+tickets-tests:
+  stage: test
+  image: node:18-bullseye
+  script:
+    - cd tickets
+    - npm install
+    - npm run test:ci
