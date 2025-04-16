@@ -13,3 +13,6 @@ auth-tests:
     - cd auth
     - npm install
     - npm run test:ci
+  rules:
+    - changes:
+      - auth/**
