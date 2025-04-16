@@ -7,8 +7,8 @@ variables:
   DOCKER_IMAGE: registry.gitlab.com/mkdev8793416/ec_ticketing_microservices
 
 auth-tests:
-  image: node:18
   stage: test
+  image: node:18
   script:
     - cd auth
     - npm install
