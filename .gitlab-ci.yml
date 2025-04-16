@@ -23,10 +23,10 @@ orders-tests:
     - npm run test:ci
 
 payments-tests:
-  stage: payments
+  stage: test
   image: node:18-bullseye
   script:
-    - cd auth
+    - cd payments
     - npm install
     - npm run test:ci
 
