@@ -2,11 +2,19 @@ import express, { Request, Response } from "express";
 import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 
+import { BadRequestError, validateRequest } from "@mkvalidate/common";
+import { Counter } from "prom-client";
 import { User } from "../models/user";
-import { validateRequest, BadRequestError } from "@mkvalidate/common";
 import { Password } from "../services/password";
+import { register } from "./metrics";
 
 const router = express.Router();
+
+const loginCounter = new Counter({
+  name: 'auth_signin_total',
+  help: 'Total number of user login attempts',
+  registers: [register],
+});
 
 router.post('/api/users/signin',
   [
@@ -20,6 +28,8 @@ router.post('/api/users/signin',
   ],
   validateRequest,
   async (req: Request, res: Response) => {
+
+
     const { email, password } = req.body;
 
     const existingUser = await User.findOne({ email });
@@ -45,7 +55,14 @@ router.post('/api/users/signin',
       jwt: userJwt,
     };
 
+    // Log the login successful message
+    console.log('Login successful — incrementing counter');
+
+    // Increment the login counter
+    loginCounter.inc();
+
     res.status(200).send(existingUser);
   });
 
 export { router as signinRouter };
+

@@ -2,10 +2,18 @@ import express, { Request, Response } from "express";
 import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 
-import { validateRequest, BadRequestError } from "@mkvalidate/common";
+import { BadRequestError, validateRequest } from "@mkvalidate/common";
+import { Counter } from "prom-client";
 import { User } from "../models/user";
+import { register } from "./metrics";
 
 const router = express.Router();
+
+const signupCounter = new Counter({
+  name: 'auth_signup_total',
+  help: 'Total number of user signup',
+  registers: [register],
+});
 
 router.post('/api/users/signup',
   [
@@ -43,8 +51,14 @@ router.post('/api/users/signup',
       jwt: userJwt,
     };
 
-    res.status(201).send(user);
+    // Log the signup successful message
+    console.log('Signup successful — incrementing counter');
 
+    // Increment the signup counter
+    signupCounter.inc();
+
+    res.status(201).send(user);
   });
 
 export { router as signupRouter };
+

@@ -1,0 +1,27 @@
+grafana:
+  adminPassword: admin
+  service:
+    type: NodePort
+    nodePort: 30000
+  ingress:
+    enabled: false
+  defaultDashboardsEnabled: true
+
+prometheus:
+  service:
+    type: NodePort
+    nodePort: 30001
+  prometheusSpec:
+    additionalScrapeConfigs:
+      - job_name: 'auth'
+        static_configs:
+          - targets: ['auth-srv.default.svc.cluster.local:3000']
+
+alertmanager:
+  enabled: false
+
+# Optional: disable things you don’t need yet
+kubeStateMetrics:
+  enabled: true
+nodeExporter:
+  enabled: true
