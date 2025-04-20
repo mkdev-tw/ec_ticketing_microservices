@@ -1,11 +1,15 @@
-# Normalize all text files to use LF
+# Normalize all text files to Unix-style LF
 * text=auto eol=lf
 
-# Explicitly mark certain files
+# Enforce LF endings for common code/config files
+*.yml text eol=lf
+*.yaml text eol=lf
 *.ts text eol=lf
 *.js text eol=lf
 *.json text eol=lf
-*.yaml text eol=lf
-*.yml text eol=lf
 *.sh text eol=lf
 *.yml text eol=lf
+*.env text eol=lf
+*.md text eol=lf
+*.html text eol=lf
+

@@ -22,6 +22,7 @@ orders-tests:
     - npm install
     - npm run test:ci
 
+<<<<<<< HEAD
 payments-tests:
   stage: test
   image: node:18-bullseye
@@ -29,6 +30,15 @@ payments-tests:
     - cd payments
     - npm install
     - npm run test:ci
+=======
+# payments-tests:
+#   stage: test
+#   image: node:18-bullseye
+#   script:
+#     - cd payments
+#     - npm install
+#     - npm run test:ci
+>>>>>>> 1b9c763 (chore: normalize line endings to LF)
 
 tickets-tests:
   stage: test
