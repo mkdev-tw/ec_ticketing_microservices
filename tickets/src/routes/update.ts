@@ -1,14 +1,14 @@
-import express, { Request, Response } from "express";
-import { Ticket } from "../models/ticket";
 import {
-  validateRequest,
+  BadRequestError,
+  NotAuthorizedError,
   NotFoundError,
   requireAuth,
-  NotAuthorizedError,
-  BadRequestError,
+  validateRequest,
 } from "@mkvalidate/common";
+import express, { Request, Response } from "express";
 import { body } from "express-validator";
 import { TicketUpdatedPublisher } from "../events/publishers/ticket-updated-publisher";
+import { Ticket } from "../models/ticket";
 import { natsWrapper } from "../nats-wrapper";
 
 const router = express.Router();
