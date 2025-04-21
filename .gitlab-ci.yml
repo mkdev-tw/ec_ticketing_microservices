@@ -18,6 +18,9 @@ auth-tests:
   stage: test
   image: node:18-bullseye
   script:
+    - export PATH="/usr/local/opt/node@18/bin:$PATH"
+    - node -v      
+    - which npm
     - cd auth
     - npm install
     - npm run test:ci
@@ -28,6 +31,9 @@ orders-tests:
   stage: test
   image: node:18-bullseye
   script:
+    - export PATH="/usr/local/opt/node@18/bin:$PATH"
+    - node -v      
+    - which npm
     - cd orders
     - npm install
     - npm run test:ci
@@ -38,6 +44,9 @@ tickets-tests:
   stage: test
   image: node:18-bullseye
   script:
+    - export PATH="/usr/local/opt/node@18/bin:$PATH"
+    - node -v      
+    - which npm
     - cd tickets
     - npm install
     - npm run test:ci
