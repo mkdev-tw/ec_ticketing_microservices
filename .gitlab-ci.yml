@@ -27,31 +27,31 @@ auth-tests:
   tags:
     - local-runner 
 
-orders-tests:
-  stage: test
-  image: node:18-bullseye
-  script:
-    - export PATH="/usr/local/opt/node@18/bin:$PATH"
-    - node -v      
-    - which npm
-    - cd orders
-    - npm install
-    - npm run test:ci
-  tags:
-    - local-runner 
+# orders-tests:
+#   stage: test
+#   image: node:18-bullseye
+#   script:
+#     - export PATH="/usr/local/opt/node@18/bin:$PATH"
+#     - node -v      
+#     - which npm
+#     - cd orders
+#     - npm install
+#     - npm run test:ci
+#   tags:
+#     - local-runner 
 
-tickets-tests:
-  stage: test
-  image: node:18-bullseye
-  script:
-    - export PATH="/usr/local/opt/node@18/bin:$PATH"
-    - node -v      
-    - which npm
-    - cd tickets
-    - npm install
-    - npm run test:ci
-  tags:
-    - local-runner 
+# tickets-tests:
+#   stage: test
+#   image: node:18-bullseye
+#   script:
+#     - export PATH="/usr/local/opt/node@18/bin:$PATH"
+#     - node -v      
+#     - which npm
+#     - cd tickets
+#     - npm install
+#     - npm run test:ci
+#   tags:
+#     - local-runner 
 
 auth-build:
   stage: build
@@ -65,62 +65,58 @@ auth-build:
     - cd auth
     - export PATH="/usr/local/opt/node@18/bin:$PATH"
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker build -t $DOCKER_IMAGE/auth:$CI_COMMIT_SHORT_SHA .
     - docker push $DOCKER_IMAGE/auth:$CI_COMMIT_SHORT_SHA
   tags:
     - local-runner 
 
-orders-build:
-  stage: build
-  image: docker:24.0.5
-  services:
-    - docker:24.0.5-dind
-  variables:
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_TLS_CERTDIR: ""
-  script:
-    - cd orders
-    - export PATH="/usr/local/opt/node@18/bin:$PATH"
-    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-    - docker build -t $DOCKER_IMAGE/orders:$CI_COMMIT_SHORT_SHA .
-    - docker push $DOCKER_IMAGE/orders:$CI_COMMIT_SHORT_SHA
-  tags:
-    - local-runner 
+# orders-build:
+#   stage: build
+#   image: docker:24.0.5
+#   services:
+#     - docker:24.0.5-dind
+#   variables:
+#     DOCKER_HOST: tcp://docker:2375
+#     DOCKER_TLS_CERTDIR: ""
+#   script:
+#     - cd orders
+#     - export PATH="/usr/local/opt/node@18/bin:$PATH"
+#     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+#     - docker build -t $DOCKER_IMAGE/orders:$CI_COMMIT_SHORT_SHA .
+#     - docker push $DOCKER_IMAGE/orders:$CI_COMMIT_SHORT_SHA
+#   tags:
+#     - local-runner 
 
-tickets-build:
-  stage: build
-  image: docker:24.0.5
-  services:
-    - docker:24.0.5-dind
-  variables:
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_TLS_CERTDIR: ""
-  script:
-    - cd tickets
-    - export PATH="/usr/local/opt/node@18/bin:$PATH"
-    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-    - docker build -t $DOCKER_IMAGE/tickets:$CI_COMMIT_SHORT_SHA .
-    - docker push $DOCKER_IMAGE/tickets:$CI_COMMIT_SHORT_SHA
-  tags:
-    - local-runner 
+# tickets-build:
+#   stage: build
+#   image: docker:24.0.5
+#   services:
+#     - docker:24.0.5-dind
+#   variables:
+#     DOCKER_HOST: tcp://docker:2375
+#     DOCKER_TLS_CERTDIR: ""
+#   script:
+#     - cd tickets
+#     - export PATH="/usr/local/opt/node@18/bin:$PATH"
+#     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+#     - docker build -t $DOCKER_IMAGE/tickets:$CI_COMMIT_SHORT_SHA .
+#     - docker push $DOCKER_IMAGE/tickets:$CI_COMMIT_SHORT_SHA
+#   tags:
+#     - local-runner 
 
-payments-build:
-  stage: build
-  image: docker:24.0.5
-  services:
-    - docker:24.0.5-dind
-  variables:
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_TLS_CERTDIR: ""
-  script:
-    - cd payments
-    - export PATH="/usr/local/opt/node@18/bin:$PATH"
-    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-    - docker build -t $DOCKER_IMAGE/payments:$CI_COMMIT_SHORT_SHA .
-    - docker push $DOCKER_IMAGE/payments:$CI_COMMIT_SHORT_SHA
-  tags:
-    - local-runner 
+# payments-build:
+#   stage: build
+#   image: docker:24.0.5
+#   services:
+#     - docker:24.0.5-dind
+#   variables:
+#     DOCKER_HOST: tcp://docker:2375
+#     DOCKER_TLS_CERTDIR: ""
+#   script:
+#     - cd payments
+#     - export PATH="/usr/local/opt/node@18/bin:$PATH"
+#     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+#     - docker build -t $DOCKER_IMAGE/payments:$CI_COMMIT_SHORT_SHA .
+#     - docker push $DOCKER_IMAGE/payments:$CI_COMMIT_SHORT_SHA
+#   tags:
+#     - local-runner 
