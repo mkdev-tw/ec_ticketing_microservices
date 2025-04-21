@@ -63,6 +63,8 @@ auth-build:
     DOCKER_TLS_CERTDIR: ""
   script:
     - cd auth
+    - export PATH="/usr/local/opt/node@18/bin:$PATH"
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker build -t $DOCKER_IMAGE/auth:$CI_COMMIT_SHORT_SHA .
     - docker push $DOCKER_IMAGE/auth:$CI_COMMIT_SHORT_SHA
@@ -79,6 +81,8 @@ orders-build:
     DOCKER_TLS_CERTDIR: ""
   script:
     - cd orders
+    - export PATH="/usr/local/opt/node@18/bin:$PATH"
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker build -t $DOCKER_IMAGE/orders:$CI_COMMIT_SHORT_SHA .
     - docker push $DOCKER_IMAGE/orders:$CI_COMMIT_SHORT_SHA
@@ -95,6 +99,8 @@ tickets-build:
     DOCKER_TLS_CERTDIR: ""
   script:
     - cd tickets
+    - export PATH="/usr/local/opt/node@18/bin:$PATH"
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker build -t $DOCKER_IMAGE/tickets:$CI_COMMIT_SHORT_SHA .
     - docker push $DOCKER_IMAGE/tickets:$CI_COMMIT_SHORT_SHA
@@ -111,6 +117,8 @@ payments-build:
     DOCKER_TLS_CERTDIR: ""
   script:
     - cd payments
+    - export PATH="/usr/local/opt/node@18/bin:$PATH"
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker build -t $DOCKER_IMAGE/payments:$CI_COMMIT_SHORT_SHA .
     - docker push $DOCKER_IMAGE/payments:$CI_COMMIT_SHORT_SHA
