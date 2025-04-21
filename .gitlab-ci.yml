@@ -6,6 +6,14 @@ stages:
 variables:
   DOCKER_IMAGE: registry.gitlab.com/mkdev8793416/ec_ticketing_microservices
 
+test-runner:
+  stage: test
+  script:
+    - echo "✅ GitLab Runner is working!"
+    - uname -a
+  tags:
+    - local-runner  # Must match the tag used during registration
+
 auth-tests:
   stage: test
   image: node:18-bullseye
