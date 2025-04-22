@@ -18,7 +18,7 @@ auth-tests:
     - npm install
     - npm run test:ci
   tags:
-    - docker 
+    - docker
 
 # orders-tests:
 #   stage: test
@@ -49,9 +49,14 @@ auth-tests:
 auth-build:
   stage: build
   image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
   script:
     - cd auth
-    - echo "DOCKER_HOST is set to $DOCKER_HOST"
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     - docker build -t $DOCKER_IMAGE/auth:$CI_COMMIT_SHORT_SHA .
     - docker push $DOCKER_IMAGE/auth:$CI_COMMIT_SHORT_SHA
   tags:
