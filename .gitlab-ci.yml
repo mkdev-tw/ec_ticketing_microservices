@@ -7,18 +7,28 @@ variables:
   DOCKER_IMAGE: registry.gitlab.com/mkdev8793416/ec_ticketing_microservices
   DOCKER_HOST: ""
 
-auth-tests:
+docker-debug:
   stage: test
-  image: node:18-bullseye
+  image: docker:24.0.5
   script:
-    - export PATH="/usr/local/opt/node@18/bin:$PATH"
-    - node -v      
-    - which npm
-    - cd auth
-    - npm install
-    - npm run test:ci
+    - echo "Checking Docker socket..."
+    - ls -la /var/run/docker.sock
+    - docker ps
   tags:
     - docker
+
+# auth-tests:
+#   stage: test
+#   image: node:18-bullseye
+#   script:
+#     - export PATH="/usr/local/opt/node@18/bin:$PATH"
+#     - node -v      
+#     - which npm
+#     - cd auth
+#     - npm install
+#     - npm run test:ci
+#   tags:
+#     - docker
 
 # orders-tests:
 #   stage: test
