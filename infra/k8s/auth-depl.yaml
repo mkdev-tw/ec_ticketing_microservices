@@ -25,7 +25,7 @@ spec:
                   name: jwt-secret
                   key: JWT_KEY
       imagePullSecrets:
-        - name: gitlab-regcre
+        - name: gitlab-regcred
 ---
 apiVersion: v1
 kind: Service
