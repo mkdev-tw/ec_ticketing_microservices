@@ -116,6 +116,8 @@ auth-deploy:
     - kubectl --kubeconfig=$KUBECONFIG apply -f infra/k8s/auth-depl.yaml
   tags:
     - docker
+  only:
+    - main
 
 orders-deploy:
   stage: deploy
