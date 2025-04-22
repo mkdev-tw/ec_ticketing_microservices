@@ -56,23 +56,23 @@ docker-debug:
 #   tags:
 #     - local-runner 
 
-auth-build:
-  stage: build
-  image: docker:24.0.5
-  services:
-    - name: docker:24.0.5-dind
-      alias: docker
-  variables:
-    DOCKER_TLS_CERTDIR: ""
-    DOCKER_HOST: tcp://docker:2375
-  script:
-    - cd auth
-    - docker info
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-    - docker build -t $DOCKER_IMAGE/auth:$CI_COMMIT_SHORT_SHA .
-    - docker push $DOCKER_IMAGE/auth:$CI_COMMIT_SHORT_SHA
-  tags:
-    - docker
+# auth-build:
+#   stage: build
+#   image: docker:24.0.5
+#   services:
+#     - name: docker:24.0.5-dind
+#       alias: docker
+#   variables:
+#     DOCKER_TLS_CERTDIR: ""
+#     DOCKER_HOST: tcp://docker:2375
+#   script:
+#     - cd auth
+#     - docker info
+#     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+#     - docker build -t $DOCKER_IMAGE/auth:$CI_COMMIT_SHORT_SHA .
+#     - docker push $DOCKER_IMAGE/auth:$CI_COMMIT_SHORT_SHA
+#   tags:
+#     - docker
 
 # orders-build:
 #   stage: build
