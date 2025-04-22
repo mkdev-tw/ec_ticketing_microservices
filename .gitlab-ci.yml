@@ -18,7 +18,7 @@ auth-tests:
     - npm install
     - npm run test:ci
   tags:
-    - docker 
+    - local-runner 
 
 # orders-tests:
 #   stage: test
