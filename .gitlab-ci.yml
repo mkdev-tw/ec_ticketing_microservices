@@ -5,6 +5,7 @@ stages:
 
 variables:
   DOCKER_IMAGE: registry.gitlab.com/mkdev8793416/ec_ticketing_microservices
+  DOCKER_HOST: ""
 
 auth-tests:
   stage: test
