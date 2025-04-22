@@ -1,12 +1,12 @@
-# stages:
-#   - test
-#   - build
-#   - deploy
-#   - infra
+stages:
+  # - test
+  # - build
+  # - deploy
+  - infra
 
-# variables:
-#   DOCKER_IMAGE: registry.gitlab.com/mkdev8793416/ec_ticketing_microservices
-#   DOCKER_HOST: ""
+variables:
+  DOCKER_IMAGE: registry.gitlab.com/mkdev8793416/ec_ticketing_microservices
+  DOCKER_HOST: ""
 
 # # used to debug docker runner issues
 # # docker-debug:
