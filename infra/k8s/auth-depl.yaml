@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: registry.gitlab.com/mkdev8793416/ec_ticketing_microservices/auth
+          image: registry.gitlab.com/mkdev8793416/ec_ticketing_microservices/auth:_TAG_
           # image: us.gcr.io/ticketing-dev-428418/auth
           env: 
             - name: MONGO_URI
