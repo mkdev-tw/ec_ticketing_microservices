@@ -102,8 +102,6 @@ payments-build:
     - docker push $DOCKER_IMAGE/payments:$CI_COMMIT_SHORT_SHA
   tags:
     - docker
-  only:
-    - main
 
 auth-deploy:
   stage: deploy
