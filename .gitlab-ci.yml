@@ -32,31 +32,31 @@ auth-tests:
   tags:
     - docker
 
-# orders-tests:
-#   stage: test
-#   image: node:18-bullseye
-#   script:
-#     - export PATH="/usr/local/opt/node@18/bin:$PATH"
-#     - node -v      
-#     - which npm
-#     - cd orders
-#     - npm install
-#     - npm run test:ci
-#   tags:
-#     - docker
+orders-tests:
+  stage: test
+  image: node:18-bullseye
+  script:
+    - export PATH="/usr/local/opt/node@18/bin:$PATH"
+    - node -v      
+    - which npm
+    - cd orders
+    - npm install
+    - npm run test:ci
+  tags:
+    - docker
 
-# tickets-tests:
-#   stage: test
-#   image: node:18-bullseye
-#   script:
-#     - export PATH="/usr/local/opt/node@18/bin:$PATH"
-#     - node -v      
-#     - which npm
-#     - cd tickets
-#     - npm install
-#     - npm run test:ci
-#   tags:
-#     - docker 
+tickets-tests:
+  stage: test
+  image: node:18-bullseye
+  script:
+    - export PATH="/usr/local/opt/node@18/bin:$PATH"
+    - node -v      
+    - which npm
+    - cd tickets
+    - npm install
+    - npm run test:ci
+  tags:
+    - docker 
 
 auth-build:
   stage: build
@@ -69,38 +69,38 @@ auth-build:
   tags:
     - docker
 
-# orders-build:
-#   stage: build
-#   image: docker:24.0.5
-#   script:
-#     - cd orders
-#     - docker build -t $DOCKER_IMAGE/orders:$CI_COMMIT_SHORT_SHA .
-#     - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
-#     - docker push $DOCKER_IMAGE/orders:$CI_COMMIT_SHORT_SHA
-#   tags:
-#     - docker
+orders-build:
+  stage: build
+  image: docker:24.0.5
+  script:
+    - cd orders
+    - docker build -t $DOCKER_IMAGE/orders:$CI_COMMIT_SHORT_SHA .
+    - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
+    - docker push $DOCKER_IMAGE/orders:$CI_COMMIT_SHORT_SHA
+  tags:
+    - docker
 
-# tickets-build:
-#   stage: build
-#   image: docker:24.0.5
-#   script:
-#     - cd tickets
-#     - docker build -t $DOCKER_IMAGE/tickets:$CI_COMMIT_SHORT_SHA .
-#     - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
-#     - docker push $DOCKER_IMAGE/tickets:$CI_COMMIT_SHORT_SHA
-#   tags:
-#     - docker
+tickets-build:
+  stage: build
+  image: docker:24.0.5
+  script:
+    - cd tickets
+    - docker build -t $DOCKER_IMAGE/tickets:$CI_COMMIT_SHORT_SHA .
+    - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
+    - docker push $DOCKER_IMAGE/tickets:$CI_COMMIT_SHORT_SHA
+  tags:
+    - docker
 
-# payments-build:
-#   stage: build
-#   image: docker:24.0.5
-#   script:
-#     - cd payments
-#     - docker build -t $DOCKER_IMAGE/payments:$CI_COMMIT_SHORT_SHA .
-#     - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
-#     - docker push $DOCKER_IMAGE/payments:$CI_COMMIT_SHORT_SHA
-#   tags:
-#     - docker
+payments-build:
+  stage: build
+  image: docker:24.0.5
+  script:
+    - cd payments
+    - docker build -t $DOCKER_IMAGE/payments:$CI_COMMIT_SHORT_SHA .
+    - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
+    - docker push $DOCKER_IMAGE/payments:$CI_COMMIT_SHORT_SHA
+  tags:
+    - docker
 
 auth-deploy:
   stage: deploy
@@ -111,5 +111,41 @@ auth-deploy:
     - cat $KUBECONFIG | head -n 10
     - sed -i "s|auth:_TAG_|auth:$CI_COMMIT_SHORT_SHA|" infra/k8s/auth-depl.yaml
     - kubectl --kubeconfig=$KUBECONFIG apply -f infra/k8s/auth-depl.yaml
+  tags:
+    - docker
+
+orders-deploy:
+  stage: deploy
+  image: alpine/k8s:1.27.4
+  script:
+    - echo "CI_COMMIT_SHORT_SHA $CI_COMMIT_SHORT_SHA"
+    - echo "Using GitLab-provided KUBECONFIG path $KUBECONFIG"
+    - cat $KUBECONFIG | head -n 10
+    - sed -i "s|orders:_TAG_|orders:$CI_COMMIT_SHORT_SHA|" infra/k8s/orders-depl.yaml
+    - kubectl --kubeconfig=$KUBECONFIG apply -f infra/k8s/orders-depl.yaml
+  tags:
+    - docker
+
+tickets-deploy:
+  stage: deploy
+  image: alpine/k8s:1.27.4
+  script:
+    - echo "CI_COMMIT_SHORT_SHA $CI_COMMIT_SHORT_SHA"
+    - echo "Using GitLab-provided KUBECONFIG path $KUBECONFIG"
+    - cat $KUBECONFIG | head -n 10
+    - sed -i "s|tickets:_TAG_|tickets:$CI_COMMIT_SHORT_SHA|" infra/k8s/tickets-depl.yaml
+    - kubectl --kubeconfig=$KUBECONFIG apply -f infra/k8s/tickets-depl.yaml
+  tags:
+    - docker
+    
+payments-deploy:
+  stage: deploy
+  image: alpine/k8s:1.27.4
+  script:
+    - echo "CI_COMMIT_SHORT_SHA $CI_COMMIT_SHORT_SHA"
+    - echo "Using GitLab-provided KUBECONFIG path $KUBECONFIG"
+    - cat $KUBECONFIG | head -n 10
+    - sed -i "s|payments:_TAG_|payments:$CI_COMMIT_SHORT_SHA|" infra/k8s/payments-depl.yaml
+    - kubectl --kubeconfig=$KUBECONFIG apply -f infra/k8s/payments-depl.yaml
   tags:
     - docker

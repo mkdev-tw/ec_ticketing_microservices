@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: payments
-          image: maxkuo/payments
+          image: registry.gitlab.com/mkdev8793416/ec_ticketing_microservices/payments:_TAG_
           env: 
             - name: NATS_CLIENT_ID
               valueFrom:
@@ -45,6 +45,8 @@ spec:
                 secretKeyRef:
                   name: stripe-secret
                   key: STRIPE_PUBLISHABLE_KEY
+      imagePullSecrets:
+        - name: gitlab-regcred
 ---
 apiVersion: v1
 kind: Service

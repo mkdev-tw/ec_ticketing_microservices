@@ -15,7 +15,7 @@ spec:
       containers:
         - name: tickets
           # image: us.gcr.io/ticketing-dev-428418/tickets
-          image: maxkuo/tickets
+          image: registry.gitlab.com/mkdev8793416/ec_ticketing_microservices/tickets:_TAG_
           env: 
             - name: NATS_CLIENT_ID
               valueFrom:
@@ -32,6 +32,8 @@ spec:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_KEY
+      imagePullSecrets:
+        - name: gitlab-regcred
 ---
 apiVersion: v1
 kind: Service
