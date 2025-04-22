@@ -63,8 +63,6 @@ auth-build:
     DOCKER_TLS_CERTDIR: ""
   script:
     - cd auth
-    - export PATH="/usr/local/opt/node@18/bin:$PATH"
-    - export DOCKER_CONFIG=$(mktemp -d)
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
     - docker build -t $DOCKER_IMAGE/auth:$CI_COMMIT_SHORT_SHA .
     - docker push $DOCKER_IMAGE/auth:$CI_COMMIT_SHORT_SHA
