@@ -106,8 +106,10 @@ auth-deploy:
   stage: deploy
   image: alpine/k8s:1.27.4
   script:
-    - export KUBECONFIG=$PWD/kubeconfig
+    - echo "CI_COMMIT_SHORT_SHA $CI_COMMIT_SHORT_SHA"
+    - echo "Using GitLab-provided KUBECONFIG path $KUBECONFIG"
+    - cat $KUBECONFIG | head -n 10
     - sed -i "s|auth:.*|auth:$CI_COMMIT_SHORT_SHA|" infra/k8s/auth-depl.yaml
-    - kubectl apply -f infra/k8s/auth-depl.yaml
+    - kubectl --kubeconfig=$KUBECONFIG apply -f infra/k8s/auth-depl.yaml
   tags:
     - docker
