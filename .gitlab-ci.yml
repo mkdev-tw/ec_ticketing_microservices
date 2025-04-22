@@ -2,6 +2,7 @@ stages:
   - test
   - build
   - deploy
+  - infra
 
 variables:
   DOCKER_IMAGE: registry.gitlab.com/mkdev8793416/ec_ticketing_microservices
@@ -101,6 +102,8 @@ payments-build:
     - docker push $DOCKER_IMAGE/payments:$CI_COMMIT_SHORT_SHA
   tags:
     - docker
+  only:
+    - main
 
 auth-deploy:
   stage: deploy
@@ -125,6 +128,8 @@ orders-deploy:
     - kubectl --kubeconfig=$KUBECONFIG apply -f infra/k8s/orders-depl.yaml
   tags:
     - docker
+  only:
+    - main
 
 tickets-deploy:
   stage: deploy
@@ -137,6 +142,8 @@ tickets-deploy:
     - kubectl --kubeconfig=$KUBECONFIG apply -f infra/k8s/tickets-depl.yaml
   tags:
     - docker
+  only:
+    - main
     
 payments-deploy:
   stage: deploy
@@ -149,3 +156,23 @@ payments-deploy:
     - kubectl --kubeconfig=$KUBECONFIG apply -f infra/k8s/payments-depl.yaml
   tags:
     - docker
+  only:
+    - main
+
+infra-deploy:
+  stage: infra
+  script:
+    - kubectl apply -f infra/k8s/client-depl.yaml
+    - kubectl apply -f infra/k8s/auth-mongo-depl.yaml
+    - kubectl apply -f infra/k8s/expiration-depl.yaml
+    - kubectl apply -f infra/k8s/expiration-redis-depl.yaml
+    - kubectl apply -f infra/k8s/ingress-srv.yaml
+    - kubectl apply -f infra/k8s/nat-depl.yaml
+    - kubectl apply -f infra/k8s/orders-mongo-depl.yaml
+    - kubectl apply -f infra/k8s/payments-mongo-depl.yaml
+    - kubectl apply -f infra/k8s/tickets-mongo-depl.yaml
+  tags:
+    - docker
+  only:
+    - main
+  when: manual
