@@ -18,9 +18,9 @@ auth-tests:
   stage: test
   image: node:18-bullseye
   script:
-    - export PATH="/usr/local/opt/node@18/bin:$PATH"
-    - node -v      
-    - which npm
+    # - export PATH="/usr/local/opt/node@18/bin:$PATH"
+    # - node -v      
+    # - which npm
     - cd auth
     - npm install
     - npm run test:ci
@@ -69,7 +69,7 @@ auth-build:
     - docker build -t $DOCKER_IMAGE/auth:$CI_COMMIT_SHORT_SHA .
     - docker push $DOCKER_IMAGE/auth:$CI_COMMIT_SHORT_SHA
   tags:
-    - local-runner 
+    - docker
 
 # orders-build:
 #   stage: build
