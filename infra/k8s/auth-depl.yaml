@@ -11,8 +11,6 @@ spec:
     metadata:
       labels:
         app: auth
-    imagePullSecrets:
-      - name: gitlab-regcre
     spec:
       containers:
         - name: auth
@@ -26,6 +24,8 @@ spec:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_KEY
+      imagePullSecrets:
+        - name: gitlab-regcre
 ---
 apiVersion: v1
 kind: Service
