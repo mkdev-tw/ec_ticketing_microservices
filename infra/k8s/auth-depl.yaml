@@ -11,6 +11,8 @@ spec:
     metadata:
       labels:
         app: auth
+    imagePullSecrets:
+      - name: gitlab-regcre
     spec:
       containers:
         - name: auth
